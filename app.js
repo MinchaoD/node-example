@@ -1,10 +1,8 @@
-const rect = {
-    perimeter: (x, y) => 2*(x + y),
-    area: (x, y) => x * y
-};
+const rect = require ('./rectangle.js')
+    
 
 function solveRect(l, w) {
-    console.log(`Solving for rectangle with dimensions: $(l), $(w)`);
+    console.log(`Solving for rectangle with dimensions: ${l}, ${w}`);
     if (l <= 0 || w <= 0) {
         console.log(`Rectangle dimensions must be greater than zero. Received: $(l), $(w)`);
     } else {
