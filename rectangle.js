@@ -1,3 +1,0 @@
-exports.perimeter = (x, y) => 2* (x + y);  
-// here can also be module.exports.perimeter = ....
-exports.area = (x, y) => x * y
