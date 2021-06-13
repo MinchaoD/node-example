@@ -6,6 +6,7 @@ const port = 3000;
 
 const app = express();
 app.use(morgan('dev')); //it is to log some development information which will print out some additional information on the screen
+// if no above code, it is fine too
 app.use(express.static(__dirname + '/public'));  // __dirname is the absolute path of the current directory of the current file is in. 
 //this above code is to get the access to the files in public folder
 
@@ -14,6 +15,8 @@ app.use((req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
     res.end('<html><body><h1>This is an Express Server</h1></body></html>');
+    //this is an express server won't show for this example server, because the above use.express __dirname + '/public' is to 
+    //access the files in the public folder so it won't log out this line of code here (this is an express server)
 
 })
 
