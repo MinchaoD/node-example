@@ -27,3 +27,5 @@ campsiteRouter.route('/') //the campsites is set up in the server.js
 });
 
 module.exports = campsiteRouter; //this is to export the campsiteRouter module
+// ways to export module: 1. moduel.exports.findX = () =>{}  2. module.exports = () => {}
+// 3. exports.name = 'NuCamp'
