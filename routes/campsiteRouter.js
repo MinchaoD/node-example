@@ -27,6 +27,36 @@ campsiteRouter.route('/') //the campsites is set up in the server.js
     res.end('Deleting all campsites');
 });
 
+
+campsiteRouter.route('/:campsiteId') 
+.all((req, res, next) => { 
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    next(); 
+})
+.get( (req,res) => {
+        res.end(`Will send details of the campsites: ${req.params.campsiteId} to you`)
+        // here use req.params... to get the campsiteId typed in, for example 23, then will save this number to req.params..
+    })
+    
+.post( (req, res) => {
+    res.statusCode = 403;
+    res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`);
+})
+
+.put((req, res) => {
+    res.write(`Updating the campsite: ${req.params.campsiteId}\n`);  
+    res.end(`Will update the campsite: ${req.body.name}
+        with description: ${req.body.description}`);
+})
+
+.delete( (req, res) => {
+    res.end(`Deleting campsite: ${req.params.campsiteId}`);
+});
+    
+
+
+
 module.exports = campsiteRouter; //this is to export the campsiteRouter module
 // ways to export module: 1. moduel.exports.findX = () =>{}  2. module.exports = () => {}
 // 3. exports.name = 'NuCamp'
