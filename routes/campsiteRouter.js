@@ -9,7 +9,8 @@ campsiteRouter.route('/') //the campsites is set up in the server.js
 })
 
 .get((req, res) => {
-    res.end('Will send all the campsites to you')
+    res.end('Will send all the campsites to you') //I think res.end used by plain node where as res.send is used by express framwork 
+    //res.send includes a response.end call, so if when there is res.send then we don't need res.end
 })
 
 .post((req, res) => {
