@@ -1,5 +1,6 @@
-const rect = require ('./rectangle.js')
-    
+
+import * as rect from './rectangle.js'; // we can convert the require to import/export here, this is for ES6. But we need
+// to add a package.json file with type:module in it
 
 function solveRect(l, w) {
     console.log(`Solving for rectangle with dimensions: ${l}, ${w}`);
