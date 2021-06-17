@@ -18,7 +18,7 @@ promotionRouter.route('/')
 })
 
 .put((req, res) => {
-    res.end('Deleting all promotionss');
+    res.end('Deleting all promotions');
 })
 
 .delete((req, res) => {

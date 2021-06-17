@@ -12,26 +12,6 @@ app.use(morgan('dev')); //it is to log some development information which will p
 
 app.use(express.json());
 
-// app.get('/campsites/:campsiteId', (req,res) => {
-//     res.end(`Will send details of the campsites: ${req.params.campsiteId} to you`)
-//     // here use req.params... to get the campsiteId typed in, for example 23, then will save this number to req.params..
-// })
-
-// app.post('/campsites/:campsiteId', (req, res) => {
-//     res.statusCode = 403;
-//     res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`);
-// });
-
-// app.put('/campsites/:campsiteId', (req, res) => {
-//     res.write(`Updating the campsite: ${req.params.campsiteId}\n`);  // this is to write first line of logging, and \n is space and next line is the res.end part
-//     res.end(`Will update the campsite: ${req.body.name}
-//         with description: ${req.body.description}`);
-// });
-
-// app.delete('/campsites/:campsiteId', (req, res) => {
-//     res.end(`Deleting campsite: ${req.params.campsiteId}`);
-// });
-
 app.use('/campsites', campsiteRouter);  //this is to set up the root as /campsites and use the campsiteRouter
 
 app.use('/promotions', promotionRouter);
