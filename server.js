@@ -1,6 +1,7 @@
 const express = require ('express');
 const morgan = require ('morgan');
 const campsiteRouter = require('./routes/campsiteRouter')
+const promotionRouter = require('./routes/promotionRouter')
 
 const hostname = 'localhost';
 const port = 3000;
@@ -32,6 +33,8 @@ app.use(express.json());
 // });
 
 app.use('/campsites', campsiteRouter);  //this is to set up the root as /campsites and use the campsiteRouter
+
+app.use('/promotions', promotionRouter);
 
 app.use(express.static(__dirname + '/public'));  // __dirname is the absolute path of the current directory of the current file is in. 
 //this above code is to get the access to the files in public folder
