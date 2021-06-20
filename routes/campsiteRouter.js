@@ -35,7 +35,7 @@ campsiteRouter.route('/:campsiteId')
     next(); 
 })
 .get( (req,res) => {
-        res.end(`Will send details of the campsites: ${req.params.campsiteId} to you`)
+        res.end(`Will send details of the campsite: ${req.params.campsiteId} to you`)
         // here use req.params... to get the campsiteId typed in, for example 23, then will save this number to req.params..
     })
     

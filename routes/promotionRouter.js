@@ -53,6 +53,4 @@ promotionRouter.route('/:promotionId')
 });
     
 
-
-
 module.exports = promotionRouter; 

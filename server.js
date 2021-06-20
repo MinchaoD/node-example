@@ -10,6 +10,9 @@ const port = 3000;
 const app = express();
 app.use(morgan('dev')); //it is to log some development information which will print out some additional information on the screen
 // if no above code, it is fine too
+// app.use.... are middlewares
+//middleware can end the request early or middleware can modify the request
+//A layer in the middleware stack is a function, which takes n parameters (2 for express, req & res) and a next function.
 
 app.use(express.json());
 
