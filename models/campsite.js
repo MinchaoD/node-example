@@ -1,0 +1,61 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+require('mongoose-currency').loadType(mongoose);
+const Currency = mongoose.Types.Currency;  //define the money currency
+
+const commentSchema = new Schema({
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
+    },
+    text: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: String,
+        required: true
+    }
+}, {
+    timestamps: true
+})
+
+const campsiteSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    elevation: {
+        type: Number,
+        required: true
+    }, 
+    cost: {
+        type: Currency,
+        required: true,
+        min: 0
+    },
+    featured: {
+        type: Boolean,
+        default: false
+    },
+    comments: [commentSchema]  //add subdocuments here
+}, {
+    timestamps: true  // this will create 2 timestamp unique id, one for create time, one for update time
+});
+
+const Campsite = mongoose.model('Campsite', campsiteSchema); //create a model called Campsite, using the capitalize and singular word of collection,
+// mongoose will auto generate campsites as the collection name
+
+module.exports = Campsite;
