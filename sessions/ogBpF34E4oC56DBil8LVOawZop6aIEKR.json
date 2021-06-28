@@ -1,1 +1,2 @@
-{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"user":"admin","__lastAccess":1624862606659}
+{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"user":"admin","__lastAccess":1624862606659}  
+//this file under sessions folder is generated automatically by express-session
