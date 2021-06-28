@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session); // in order to use filestore app, we need 
+// to return function to a function, so we have 2 parameters here
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -32,10 +35,19 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('12345-67890-09876-54321')); // this is the secrete key used for cookie, it can be any string
+//app.use(cookieParser('12345-67890-09876-54321')); // we will not use cookie if we are using express session, we can only use 1
+app.use(session({
+  name: 'session-id',
+  secret: '12345-67890-09876-54321',
+  saveUninitialized: false,  //this means if the session is empty, we don't save it automatically
+  resave: false, // this means if we update the session, we don't resave it
+  store: new FileStore()  // to store the session into the harddisk of the computer
+}));
+
 
 function auth(req, res, next) {  // we add authentication before the static use because we want to authenticate before that
-  if(!req.signedCookies.user) { // if we are not using signed cookies. then we need to do the below authorization steps
+  //if(!req.signedCookies.user) { // we don't need this line because we use session now
+    if(!req.session.user){
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       const err = new Error ('You are not authenticated!');
@@ -47,8 +59,8 @@ function auth(req, res, next) {  // we add authentication before the static use 
     const user = auth[0];
     const pass = auth[1];
     if (user === 'admin' && pass === 'password') {
-      res.cookie('user', 'admin', {signed: true}) // create a cookie, the name is user, value is the admin, the signed: true is optional, which 
-      // is to use secrete key to create an assigned cookie
+      //res.cookie('user', 'admin', {signed: true}) 
+      req.session.user = 'admin';  //create new session with username as admin
       return next(); // means authorized
     } else {
       const err = new Error ('You are not authenticated!');
@@ -57,7 +69,8 @@ function auth(req, res, next) {  // we add authentication before the static use 
       return next (err);
     } 
     } else {
-      if (req.signedCookies.user === 'admin') { // if the signed cookie is admin...
+      //if (req.signedCookies.user === 'admin') { 
+      if (req.session.user === 'admin') {
         return next()
       } else {
         const err = new Error ('You are not authenticated!');
