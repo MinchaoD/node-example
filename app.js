@@ -45,34 +45,48 @@ app.use(session({
 }));
 
 
+app.use('/', indexRouter);
+app.use('/users', usersRouter);  // move these 2 code to here, before the authentication, 
+// is because we want to use indexrouter before authentication, also we can use usersRouter to authenticate instead 
+
+
 function auth(req, res, next) {  // we add authentication before the static use because we want to authenticate before that
   //if(!req.signedCookies.user) { // we don't need this line because we use session now
-    if(!req.session.user){
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      const err = new Error ('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      return next (err);
-    }
-    const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');  // buffer is global which means we don't need to import it
-    const user = auth[0];
-    const pass = auth[1];
-    if (user === 'admin' && pass === 'password') {
-      //res.cookie('user', 'admin', {signed: true}) 
-      req.session.user = 'admin';  //create new session with username as admin
-      return next(); // means authorized
+  console.log(req.session); // we had session set up under user.js, so we can console.log it here  
+  if(!req.session.user){
+    // const authHeader = req.headers.authorization;
+    // if (!authHeader) {
+    //   const err = new Error ('You are not authenticated!');
+    //   res.setHeader('WWW-Authenticate', 'Basic');
+    //   err.status = 401;
+    //   return next (err);
+    // }
+    // const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');  // buffer is global which means we don't need to import it
+    // const user = auth[0];
+    // const pass = auth[1];
+    // if (user === 'admin' && pass === 'password') {
+    //   //res.cookie('user', 'admin', {signed: true}) 
+    //   req.session.user = 'admin';  //create new session with username as admin
+    //   return next(); // means authorized
+    // } else {
+    //   const err = new Error ('You are not authenticated!');
+    //   res.setHeader('WWW-Authenticate', 'Basic');
+    //   err.status = 401;
+    //   return next (err);
+    // } 
+    // } else {
+    //   //if (req.signedCookies.user === 'admin') { 
+    //   if (req.session.user === 'admin') {
+    //     return next()
+
+    // we don't need all these above code any more, is because we are doing authentication under user.js now
+    const err = new Error('You are not authenticated!');
+        err.status = 401;
+        return next(err);
     } else {
-      const err = new Error ('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      return next (err);
-    } 
-    } else {
-      //if (req.signedCookies.user === 'admin') { 
-      if (req.session.user === 'admin') {
-        return next()
-      } else {
+        if (req.session.user === 'authenticated') {  // connect with line 58 of user.js under routes folder
+            return next();
+        } else {
         const err = new Error ('You are not authenticated!');
         //res.setHeader('WWW-Authenticate', 'Basic'); // remove this line of code, so we don't challenge the user again and again
         err.status = 401;
@@ -85,8 +99,6 @@ app.use(auth);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/campsites', campsiteRouter);
 app.use('/promotions', promotionRouter);
 app.use('/partners', partnerRouter);
