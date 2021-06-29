@@ -6,6 +6,9 @@ var logger = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session); // in order to use filestore app, we need 
 // to return function to a function, so we have 2 parameters here
+const passport = require('passport');
+const authenticate = require('./authenticate');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -45,6 +48,9 @@ app.use(session({
 }));
 
 
+app.use(passport.initialize());
+app.use(passport.session());  // 2 middlewares, used only for if passport uses sessions
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);  // move these 2 code to here, before the authentication, 
 // is because we want to use indexrouter before authentication, also we can use usersRouter to authenticate instead 
@@ -52,8 +58,8 @@ app.use('/users', usersRouter);  // move these 2 code to here, before the authen
 
 function auth(req, res, next) {  // we add authentication before the static use because we want to authenticate before that
   //if(!req.signedCookies.user) { // we don't need this line because we use session now
-  console.log(req.session); // we had session set up under user.js, so we can console.log it here  
-  if(!req.session.user){
+  console.log(req.user); 
+  if(!req.user){
     // const authHeader = req.headers.authorization;
     // if (!authHeader) {
     //   const err = new Error ('You are not authenticated!');
@@ -84,16 +90,11 @@ function auth(req, res, next) {  // we add authentication before the static use 
         err.status = 401;
         return next(err);
     } else {
-        if (req.session.user === 'authenticated') {  // connect with line 58 of user.js under routes folder
-            return next();
-        } else {
-        const err = new Error ('You are not authenticated!');
-        //res.setHeader('WWW-Authenticate', 'Basic'); // remove this line of code, so we don't challenge the user again and again
-        err.status = 401;
-        return next (err);
+       
+        return next ();
       }
    }
-}
+
 
 app.use(auth);  
 
