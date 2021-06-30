@@ -16,8 +16,8 @@ const commentSchema = new Schema({
         required: true
     },
     author: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'  // these 2 lines of code are for connecting author with username(first and last name) using mongoose populate
     }
 }, {
     timestamps: true
