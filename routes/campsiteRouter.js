@@ -6,7 +6,7 @@ const authenticate = require('../authenticate');
 campsiteRouter.route('/') //the campsites is set up in the server.js
 .get((req, res, next) => {
     Campsite.find()
-    .populate('comments.author')
+    .populate('comments.author')  // for all the get method, we add this code, is because when we do get, it will return the first and last name from user for the comment author 
     .then(campsites => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
