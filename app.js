@@ -62,33 +62,7 @@ app.use('/users', usersRouter);  // move these 2 code to here, before the authen
 //   //if(!req.signedCookies.user) { // we don't need this line because we use session now
 //   console.log(req.user); 
 //   if(!req.user){
-//     // const authHeader = req.headers.authorization;
-//     // if (!authHeader) {
-//     //   const err = new Error ('You are not authenticated!');
-//     //   res.setHeader('WWW-Authenticate', 'Basic');
-//     //   err.status = 401;
-//     //   return next (err);
-//     // }
-//     // const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');  // buffer is global which means we don't need to import it
-//     // const user = auth[0];
-//     // const pass = auth[1];
-//     // if (user === 'admin' && pass === 'password') {
-//     //   //res.cookie('user', 'admin', {signed: true}) 
-//     //   req.session.user = 'admin';  //create new session with username as admin
-//     //   return next(); // means authorized
-//     // } else {
-//     //   const err = new Error ('You are not authenticated!');
-//     //   res.setHeader('WWW-Authenticate', 'Basic');
-//     //   err.status = 401;
-//     //   return next (err);
-//     // } 
-//     // } else {
-//     //   //if (req.signedCookies.user === 'admin') { 
-//     //   if (req.session.user === 'admin') {
-//     //     return next()
-
-//     // we don't need all these above code any more, is because we are doing authentication under user.js now
-//     const err = new Error('You are not authenticated!');
+//    const err = new Error('You are not authenticated!');
 //         err.status = 401;
 //         return next(err);
 //     } else {
