@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const passport = require('passport');
+const authenticate = require('../authenticate');
 
 const router = express.Router();
 
@@ -50,10 +51,10 @@ router.post('/signup', (req,res,next) => {
 })
 
   router.post('/login', passport.authenticate('local'), (req, res) =>{
+    const token = authenticate.getToken({_id: req.user._id});  //once verify login, it will assign a token
     res.statusCode = 200;
     res.setHeader('Content-Type','application/json');
-    res.json({success: true, status: 'You are successfully logged in!'});
-  })  //passport will automatically check the logins
+    res.json({success: true, token: token, status: 'You are successfully logged in!'});}) // the assigned token will be carried out here after login successfully
 
   //   if(!req.session.user) {
   //     const authHeader = req.headers.authorization;
