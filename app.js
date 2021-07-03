@@ -33,6 +33,16 @@ connect.then(() => console.log(`Connected correctly to server`),
 
 var app = express();
 
+app.all('*', (req,res,next) =>{  //it catches all the request coming through including get, post, delete...
+  if(req.secure) {
+    return next();  // if the path is secure which is already https, then it can go to the next middleware
+  } else{
+    console.log(`Redirecting to: https://${req.hostname}:${app.get(`secPort`)}${req.url}`);
+    res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`)  // if the path is not https, then we will redirect it to the https
+  }
+  
+})
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
