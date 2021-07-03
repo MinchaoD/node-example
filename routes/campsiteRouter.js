@@ -183,6 +183,8 @@ campsiteRouter.route('/:campsiteId/comments/:commentId')
    
     .then(campsite => {
         if (campsite && campsite.comments.id(req.params.commentId)) {
+            //below code works too, but not good, because we want to be able to log out err 403 later        
+            // if (campsite && campsite.comments.id(req.params.commentId).author._id.equals(req.user._id)) {
             if(req.user._id.equals(campsite.comments.id(req.params.commentId).author._id)){  // to check if the comment author id is same as the login user id, if same, then can update the comment
                 if (req.body.rating) {
                     campsite.comments.id(req.params.commentId).rating = req.body.rating;  

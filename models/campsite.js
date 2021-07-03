@@ -18,6 +18,7 @@ const commentSchema = new Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'  // these 2 lines of code are for connecting author with username(first and last name) using mongoose populate
+        // 'User' here is the name of the other model collection for this population connection
     }
 }, {
     timestamps: true
