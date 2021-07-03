@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// the server.cert and key.cert files are under the add-verifyAdmin-authentication tree, which should be under this tree, but the code still works
+
 /**
  * Module dependencies.
  */
