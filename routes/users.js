@@ -2,11 +2,16 @@ const express = require('express');
 const User = require('../models/user');
 const passport = require('passport');
 const authenticate = require('../authenticate');
+const cors = require('./cors');
 
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, function(req, res, next) {
+
+
+router
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get('/', cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, function(req, res, next) {
   User.find()
   .then(users=>{
     res.statusCode = 200;
@@ -16,7 +21,7 @@ router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, function(req,
   .catch(err=> next(err));
 });
 
-router.post('/signup', (req,res) => {
+router.post('/signup', cors.corsWithOptions, (req,res) => {
     User.register(
       new User({username: req.body.username}),
       req.body.password,
